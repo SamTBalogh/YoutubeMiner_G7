@@ -1,5 +1,5 @@
 
-package aiss.YouTubeMiner.model.channel;
+package aiss.YouTubeMiner.model.YoutubeModel.channel;
 
 import java.util.List;
 

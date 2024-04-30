@@ -1,10 +1,11 @@
 
-package aiss.YouTubeMiner.model.videoSnippet;
+package aiss.YouTubeMiner.model.YoutubeModel.videoSnippet;
 
 
-import aiss.YouTubeMiner.model.caption.Caption;
-import aiss.YouTubeMiner.model.comment.Comment;
-import com.fasterxml.jackson.annotation.*;
+import aiss.YouTubeMiner.model.YoutubeModel.caption.Caption;
+import aiss.YouTubeMiner.model.YoutubeModel.comment.Comment;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
