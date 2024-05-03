@@ -1,5 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
+import aiss.YouTubeMiner.model.YoutubeModel.comment.YoutubeComment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -29,11 +30,11 @@ public class Comment {
 
     public Comment() {}
 
-    public Comment(String id, String text ,String createdOn, User author) {
-        this.id = id;
-        this.text = text;
-        this.createdOn = createdOn;
-        this.author = author;
+    public Comment(YoutubeComment youtubeComment) {
+        this.id = youtubeComment.getCommentSnippet().getTopLevelComment().getId();
+        this.text = youtubeComment.getCommentSnippet().getTopLevelComment().getSnippet().getTextOriginal();
+        this.createdOn = youtubeComment.getCommentSnippet().getTopLevelComment().getSnippet().getPublishedAt();
+        this.author = new User(youtubeComment.getCommentSnippet().getTopLevelComment().getSnippet().getAuthorDisplayName(), youtubeComment.getCommentSnippet().getTopLevelComment().getSnippet().getAuthorChannelUrl(),youtubeComment.getCommentSnippet().getTopLevelComment().getSnippet().getAuthorProfileImageUrl());
     }
 
     public String getId() {
