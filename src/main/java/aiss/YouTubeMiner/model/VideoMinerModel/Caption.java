@@ -1,5 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
+import aiss.YouTubeMiner.model.YoutubeModel.caption.Captions;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,13 +23,11 @@ public class Caption {
     @JsonProperty("language")
     private String language;
 
-    public Caption(String id, String language, String name) {
-        this.id = id;
-        this.language = language;
-        this.name = name;
+    public Caption(Captions captions) {
+        this.id = captions.getId();
+        this.language = captions.getSnippet().getLanguage();
+        this.name = captions.getSnippet().getName();
     }
-
-    public Caption() {}
 
     public String getId() {
         return id;

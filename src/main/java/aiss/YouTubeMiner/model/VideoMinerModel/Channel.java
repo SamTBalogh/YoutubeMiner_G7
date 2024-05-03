@@ -38,6 +38,7 @@ public class Channel {
     private List<Video> videos;
 
     public Channel() {
+
         this.videos = new ArrayList<>();
     }
 
