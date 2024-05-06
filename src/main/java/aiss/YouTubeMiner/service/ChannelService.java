@@ -11,8 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class ChannelService {
@@ -24,8 +25,8 @@ public class ChannelService {
 
     @Autowired
     RestTemplate restTemplate;
-    public Channel findchannelById(String id) throws ChannelNotFoundException {
-        try {
+
+    public Channel findChannelById(String id) throws ChannelNotFoundException {
             String url = uri + "/channels?part=snippet&id="+ id;
             HttpHeaders headers = new HttpHeaders();
             headers.set("X-goog-api-key", token);
@@ -33,16 +34,10 @@ public class ChannelService {
 
             ResponseEntity<ChannelSearch> response = restTemplate.exchange(url, HttpMethod.GET, request, ChannelSearch.class);
 
-            ChannelSearch youtubeChannels = response.getBody();
-            if (youtubeChannels == null || youtubeChannels.getItems()==null || youtubeChannels.getItems().get(0).getSnippet() == null) {
+            List<YoutubeChannels> youtubeChannels = response.getBody().getItems();
+            if (youtubeChannels == null) {
                 throw new ChannelNotFoundException();
             }
-            Channel channel= new Channel(id, youtubeChannels.getItems().get(0).getSnippet().getTitle(), youtubeChannels.getItems().get(0).getSnippet().getDescription(), youtubeChannels.getItems().get(0).getSnippet().getPublishedAt());
-            return channel;
-        }
-        catch (HttpClientErrorException.NotFound e) {
-            throw new ChannelNotFoundException();
-
-        }
+        return new Channel(id, youtubeChannels.get(0).getSnippet().getTitle(), youtubeChannels.get(0).getSnippet().getDescription(), youtubeChannels.get(0).getSnippet().getPublishedAt());
     }
 }
