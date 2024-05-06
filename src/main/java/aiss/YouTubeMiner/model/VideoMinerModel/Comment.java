@@ -2,30 +2,23 @@ package aiss.YouTubeMiner.model.VideoMinerModel;
 
 import aiss.YouTubeMiner.model.YoutubeModel.comment.YoutubeComment;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 /**
  * @author Juan C. Alonso
  */
-@Entity
-@Table(name = "Comment")
+
 public class Comment {
 
-    @Id
     @JsonProperty("id")
     private String id;
 
     @JsonProperty("text")
-    @Column(columnDefinition="TEXT")
     private String text;
 
     @JsonProperty("createdOn")
     private String createdOn;
 
     @JsonProperty("author")
-    @OneToOne(cascade = CascadeType.ALL)
-    @NotNull(message = "Comment author cannot be null")
     private User author;
 
     public Comment() {}

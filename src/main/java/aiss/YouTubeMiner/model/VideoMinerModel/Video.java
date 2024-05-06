@@ -1,9 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,36 +8,25 @@ import java.util.List;
 /**
  * @author Juan C. Alonso
  */
-@Entity
-@Table(name = "Video")
+
 public class Video {
 
-    @Id
     @JsonProperty("id")
     private String id;
 
     @JsonProperty("name")
-    @NotEmpty(message = "Video name cannot be empty")
     private String name;
 
     @JsonProperty("description")
-    @Column(columnDefinition="TEXT")
     private String description;
 
     @JsonProperty("releaseTime")
-    @NotEmpty(message = "Video release time cannot be empty")
     private String releaseTime;
 
     @JsonProperty("comments")
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "videoId")
-    @NotNull(message = "Video comments cannot be null")
     private List<Comment> comments;
 
     @JsonProperty("captions")
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "videoId")
-    @NotNull(message = "Video captions cannot be null")
     private List<Caption> captions;
 
     public Video() {}

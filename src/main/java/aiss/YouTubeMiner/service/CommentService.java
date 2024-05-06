@@ -4,7 +4,6 @@ package aiss.YouTubeMiner.service;
 import aiss.YouTubeMiner.exception.CommentsNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
 import aiss.YouTubeMiner.model.YoutubeModel.comment.CommentSearch;
-import aiss.YouTubeMiner.model.YoutubeModel.comment.YoutubeComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

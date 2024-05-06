@@ -9,9 +9,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class ChannelService {
     @Value("${youtube.api.token}")
     private String token;
@@ -21,7 +23,6 @@ public class ChannelService {
 
     @Autowired
     RestTemplate restTemplate;
-
     public Channel findchannelById(String id) throws ChannelNotFoundException {
         try {
             String url = uri + "/channels?part=snippet%2CcontentDetails%2Cstatistics&id="+id+"&key="+token;

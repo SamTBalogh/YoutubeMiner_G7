@@ -3,7 +3,7 @@ package aiss.YouTubeMiner.model.YoutubeModel.videoSnippet;
 
 
 import aiss.YouTubeMiner.model.YoutubeModel.caption.Captions;
-import aiss.YouTubeMiner.model.YoutubeModel.comment.Comment;
+import aiss.YouTubeMiner.model.YoutubeModel.comment.YoutubeComment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,7 +20,7 @@ public class VideoSnippet {
 
     // These attributes have been manually added
     @JsonProperty("comments")
-    private List<Comment> comments;
+    private List<YoutubeComment> comments;
 
     @JsonProperty("captions")
     private List<Captions> captions;
@@ -31,12 +31,12 @@ public class VideoSnippet {
     }
 
     @JsonProperty("comments")
-    public List<Comment> getComments() {
+    public List<YoutubeComment> getComments() {
         return comments;
     }
 
     @JsonProperty("comments")
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<YoutubeComment> comments) {
         this.comments = comments;
     }
 

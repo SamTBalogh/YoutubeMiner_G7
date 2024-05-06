@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import aiss.YouTubeMiner.model.VideoMinerModel.Caption;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class CaptionService {
     @Value("${youtube.api.token}")
     private String token;
@@ -25,9 +26,9 @@ public class CaptionService {
     public List<Caption> findCaptionById(String id) throws CaptionsNotFoundException {
 
         try {
-            String url = uri+ "/captions?part=snippet&videoId="+id+"&key="+token;
+            String url = uri+"/captions?part=snippet&videoId="+id;
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer"+ token);
+            headers.set("X-goog-api-key", token);
             HttpEntity<CaptionSearch> request = new HttpEntity<>(null, headers);
 
             ResponseEntity<CaptionSearch> response = restTemplate.exchange(url, HttpMethod.GET, request,CaptionSearch.class);

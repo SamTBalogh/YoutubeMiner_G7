@@ -1,13 +1,10 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 
 /**
  * @author Juan C. Alonso
  */
-@Entity
-@Table(name = "VMUser")
 public class User {
 
     /*
@@ -16,9 +13,7 @@ public class User {
     * created by a User that already has a Comment in a previously stored Video. To avoid this exception, we automatically
     * assign an id to each new User with AutoIncrement.
      */
-    @Id
     @JsonProperty("id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @JsonProperty("name")
