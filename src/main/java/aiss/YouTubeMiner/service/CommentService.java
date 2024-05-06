@@ -1,7 +1,6 @@
 package aiss.YouTubeMiner.service;
 
-
-import aiss.YouTubeMiner.exception.CommentNotFoundException;
+import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
 import aiss.YouTubeMiner.model.YoutubeModel.comment.CommentSearch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class CommentService {
     @Value("${youtube.api.uri}")
     private String uri;
 
-    public List<Comment> findCommentsByVideoId(String id) throws CommentNotFoundException {
+    public List<Comment> findCommentsByVideoId(String id) throws VideoNotFoundException {
         try {
             String url = uri+"/commentThreads?part=snippet&videoId=" + id;
             HttpHeaders headers = new HttpHeaders();
@@ -38,20 +37,18 @@ public class CommentService {
             HttpEntity<CommentSearch> request = new HttpEntity<>(null, headers);
             try{
                 ResponseEntity<CommentSearch> response = restTemplate.exchange(url, HttpMethod.GET,request, CommentSearch.class);
-                List<Comment> comments = response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
-                return comments;
+                return response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
             }
             catch (HttpClientErrorException.Forbidden e){
-                List<Comment> comments = new ArrayList<>();
-                return comments;
+                return new ArrayList<>();
             }
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new CommentNotFoundException();
+            throw new VideoNotFoundException();
         }
     }
 
-    public List<Comment> findCommentsByVideoIdMax(String id, Integer num) throws CommentNotFoundException {
+    public List<Comment> findCommentsByVideoIdMax(String id, Integer num) throws VideoNotFoundException {
         try {
             String url = uri+"/commentThreads?part=snippet&maxResults="+num+"&videoId="+id;
             HttpHeaders headers = new HttpHeaders();
@@ -59,16 +56,14 @@ public class CommentService {
             HttpEntity<CommentSearch> request = new HttpEntity<>(null,headers);
             try{
                 ResponseEntity<CommentSearch> response = restTemplate.exchange(url, HttpMethod.GET,request, CommentSearch.class);
-                List<Comment> comments =response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
-                return comments;
+                return response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
             }
             catch (HttpClientErrorException.Forbidden e){
-                List<Comment> comments = new ArrayList<>();
-                return comments;
+                return new ArrayList<>();
             }
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new CommentNotFoundException();
+            throw new VideoNotFoundException();
         }
     }
 }

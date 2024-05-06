@@ -15,6 +15,7 @@ public class VideoSnippet {
 
     @JsonProperty("id")
     private VideoSnippetId id;
+
     @JsonProperty("snippet")
     private VideoSnippetDetails snippet;
 

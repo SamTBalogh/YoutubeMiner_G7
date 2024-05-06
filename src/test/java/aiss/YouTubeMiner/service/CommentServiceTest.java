@@ -1,6 +1,7 @@
 package aiss.YouTubeMiner.service;
 
 import aiss.YouTubeMiner.exception.CommentNotFoundException;
+import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("Get comments from a video id")
-    void findCommentsFromVideoId() throws CommentNotFoundException {
+    void findCommentsFromVideoId() throws VideoNotFoundException {
         List<Comment> comment = service.findCommentsByVideoId("_VB39Jo8mAQ");
         assertNotNull(comment);
         System.out.println(comment);
@@ -29,7 +30,7 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("Get comments from a video with comments disabled")
-    void findCommentsFromVideoIdDisabled() throws CommentNotFoundException {
+    void findCommentsFromVideoIdDisabled() throws VideoNotFoundException {
         List<Comment> comment = service.findCommentsByVideoId("KZ613lCnoJ0");
         assertNotNull(comment);
         System.out.println(comment);
@@ -38,12 +39,12 @@ public class CommentServiceTest {
     @Test
     @DisplayName("Get comments from an invalid video Id")
     void findCommentsFromInvalidVideoId() {
-        assertThrows(CommentNotFoundException.class, () -> {service.findCommentsByVideoId("Wololo");});
+        assertThrows(VideoNotFoundException.class, () -> {service.findCommentsByVideoId("Wololo");});
     }
 
     @Test
     @DisplayName("Get a certain number of comments from a video")
-    void findMaxCommentsFromVideoId() throws CommentNotFoundException {
+    void findMaxCommentsFromVideoId() throws VideoNotFoundException {
         List<Comment> comment = service.findCommentsByVideoIdMax("mKIhHNznt4s", 10);
         assertNotNull(comment);
         Assertions.assertEquals(10, comment.size());
@@ -53,7 +54,7 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("Get comments from a video with comments disabled")
-    void findMaxCommentsFromVideoIdDisabled() throws CommentNotFoundException {
+    void findMaxCommentsFromVideoIdDisabled() throws VideoNotFoundException{
         List<Comment> comment = service.findCommentsByVideoIdMax("KZ613lCnoJ0", 4);
         assertNotNull(comment);
         Assertions.assertEquals(0, comment.size());
