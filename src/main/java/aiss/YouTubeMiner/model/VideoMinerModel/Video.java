@@ -1,6 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
-import aiss.YouTubeMiner.model.YoutubeModel.videoSnippet.VideoSnippet;
+import aiss.YouTubeMiner.model.YouTubeModel.videoSnippet.VideoSnippet;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ public class Video {
     public Video() {}
 
 
+    // Transformer for List<VideoSnippet> into Video
     public Video(VideoSnippet videoSnippet) {
         this.id = videoSnippet.getId().getVideoId();
         this.name = videoSnippet.getSnippet().getTitle();
@@ -40,7 +41,17 @@ public class Video {
         this.releaseTime = videoSnippet.getSnippet().getPublishedAt();
         this.comments = new ArrayList<>();
         this.captions = new ArrayList<>();
+    }
 
+
+    //Transformer for VideoSnippet into Video
+    public Video(String id, String title, String description, String publishedAt) {
+        this.id = id;
+        this.name = title;
+        this.description = description;
+        this.releaseTime = publishedAt;
+        this.comments = new ArrayList<>();
+        this.captions = new ArrayList<>();
     }
 
     public String getId() {

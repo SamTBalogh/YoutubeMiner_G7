@@ -1,5 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
+import aiss.YouTubeMiner.model.YouTubeModel.extended.channel.ChannelContentDetails;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -25,16 +26,35 @@ public class Channel {
     @JsonProperty("videos")
     private List<Video> videos;
 
+
+    //this attribute has been added manually
+    @JsonProperty("contentDetails")
+    private ChannelContentDetails contentDetails;
+
+    @JsonProperty("uploads")
+    private String uploadsId;
+
     public Channel() {
         this.videos = new ArrayList<>();
     }
 
+    //Transformer YoutubeChannel into Channel
     public Channel(String id, String name, String description, String createdTime) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdTime = createdTime;
         this.videos = new ArrayList<>();
+    }
+
+    //Transformer YoutubeChannels into Channel
+    public Channel(String id, String name, String description, String createdTime, String uploads) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdTime = createdTime;
+        this.videos = new ArrayList<>();
+        this.uploadsId = uploads;
     }
 
     public String getId() {
@@ -77,6 +97,22 @@ public class Channel {
         this.videos = videos;
     }
 
+    public ChannelContentDetails getContentDetails() {
+        return contentDetails;
+    }
+
+    public void setContentDetails(ChannelContentDetails contentDetails) {
+        this.contentDetails = contentDetails;
+    }
+
+    public String getUploads() {
+        return uploadsId;
+    }
+
+    public void setUploads(String uploadsId) {
+        this.uploadsId = uploadsId;
+    }
+
     @Override
     public String toString() {
         return "Channel{" +
@@ -85,6 +121,8 @@ public class Channel {
                 ", description='" + description + '\'' +
                 ", createdTime='" + createdTime + '\'' +
                 ", videos=" + videos +
+                ", contentDetails=" + contentDetails +
+                ", uploadsId=" + uploadsId +
                 '}';
     }
 }

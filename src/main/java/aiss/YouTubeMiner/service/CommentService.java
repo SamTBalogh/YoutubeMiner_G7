@@ -1,8 +1,8 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.VideoNotFoundException;
+import aiss.YouTubeMiner.exception.CommentNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
-import aiss.YouTubeMiner.model.YoutubeModel.comment.CommentSearch;
+import aiss.YouTubeMiner.model.YouTubeModel.comment.CommentSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -29,7 +29,7 @@ public class CommentService {
     @Value("${youtube.api.uri}")
     private String uri;
 
-    public List<Comment> findCommentsByVideoId(String id) throws VideoNotFoundException {
+    public List<Comment> findCommentsByVideoId(String id) throws CommentNotFoundException {
         try {
             String url = uri+"/commentThreads?part=snippet&videoId=" + id;
             HttpHeaders headers = new HttpHeaders();
@@ -44,11 +44,11 @@ public class CommentService {
             }
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new VideoNotFoundException();
+            throw new CommentNotFoundException();
         }
     }
 
-    public List<Comment> findCommentsByVideoIdMax(String id, Integer num) throws VideoNotFoundException {
+    public List<Comment> findCommentsByVideoIdMax(String id, Integer num) throws CommentNotFoundException {
         try {
             String url = uri+"/commentThreads?part=snippet&maxResults="+num+"&videoId="+id;
             HttpHeaders headers = new HttpHeaders();
@@ -63,7 +63,7 @@ public class CommentService {
             }
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new VideoNotFoundException();
+            throw new CommentNotFoundException();
         }
     }
 }

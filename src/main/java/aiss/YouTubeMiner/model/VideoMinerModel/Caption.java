@@ -1,6 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
-import aiss.YouTubeMiner.model.YoutubeModel.caption.Captions;
+import aiss.YouTubeMiner.model.YouTubeModel.caption.Captions;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -17,6 +17,7 @@ public class Caption {
     @JsonProperty("language")
     private String language;
 
+    // Transformer Captions into Caption
     public Caption(Captions captions) {
         this.id = captions.getId();
         this.language = captions.getSnippet().getLanguage();

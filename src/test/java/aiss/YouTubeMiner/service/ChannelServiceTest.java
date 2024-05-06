@@ -1,16 +1,20 @@
 package aiss.YouTubeMiner.service;
 
 import aiss.YouTubeMiner.exception.ChannelNotFoundException;
+import aiss.YouTubeMiner.exception.ListChannelsNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Channel;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 public class ChannelServiceTest {
+
     @Autowired
     ChannelService service;
 
@@ -27,5 +31,32 @@ public class ChannelServiceTest {
         assertThrows(ChannelNotFoundException.class, () -> {service.findChannelById("Wololo");});
     }
 
+    @Test
+    @DisplayName("Get a List of Channels by name")
+    void findChannelsByName() throws ListChannelsNotFoundException, ChannelNotFoundException {
+        List<Channel> channels = service.findSearchListChannelsByName("ThePrimeTimeagen");
+        assertNotNull(channels);
+        System.out.println(channels);
+    }
 
+    @Test
+    @DisplayName("Get a List of Channels by name 404 Not Found")
+    void findChannelsByNameNotFound(){
+        assertThrows(ListChannelsNotFoundException.class, () -> {service.findSearchListChannelsByName("askhdasdas");});
+    }
+
+    @Test
+    @DisplayName("Get a List of Channels by name")
+    void findChannelsByNameMax() throws ListChannelsNotFoundException, ChannelNotFoundException {
+        List<Channel> channels = service.findSearchListChannelsByNameMax("ThePrimeTimeagen", 2);
+        assertNotNull(channels);
+        Assertions.assertEquals(2, channels.size());
+        System.out.println(channels);
+    }
+
+    @Test
+    @DisplayName("Get a List of Channels by name 404 Not Found")
+    void findChannelsByNameNotFoundMax(){
+        assertThrows(ListChannelsNotFoundException.class, () -> {service.findSearchListChannelsByNameMax("askhdasdas",1);});
+    }
 }

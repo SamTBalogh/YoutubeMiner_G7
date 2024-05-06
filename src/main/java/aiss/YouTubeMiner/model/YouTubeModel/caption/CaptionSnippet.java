@@ -1,4 +1,4 @@
-package aiss.YouTubeMiner.model.YoutubeModel.caption;
+package aiss.YouTubeMiner.model.YouTubeModel.caption;
 
 import com.fasterxml.jackson.annotation.*;
 

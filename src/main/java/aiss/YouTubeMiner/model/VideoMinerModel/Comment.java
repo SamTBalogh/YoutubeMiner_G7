@@ -1,6 +1,6 @@
 package aiss.YouTubeMiner.model.VideoMinerModel;
 
-import aiss.YouTubeMiner.model.YoutubeModel.comment.YoutubeComment;
+import aiss.YouTubeMiner.model.YouTubeModel.comment.YoutubeComment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -23,6 +23,7 @@ public class Comment {
 
     public Comment() {}
 
+    // Transformer YoutubeComment into Comment
     public Comment(YoutubeComment youtubeComment) {
         this.id = youtubeComment.getCommentSnippet().getTopLevelComment().getId();
         this.text = youtubeComment.getCommentSnippet().getTopLevelComment().getSnippet().getTextOriginal();

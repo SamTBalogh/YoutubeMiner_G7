@@ -1,10 +1,9 @@
-
-package aiss.YouTubeMiner.model.YoutubeModel.videoSnippet;
+package aiss.YouTubeMiner.model.YouTubeModel.extended.uploads;
 
 import com.fasterxml.jackson.annotation.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VideoSnippetId {
+public class ResourceId {
 
     @JsonProperty("videoId")
     private String videoId;
@@ -15,15 +14,15 @@ public class VideoSnippetId {
     }
 
     @JsonProperty("videoId")
-    public void setVideoId(String videoId) {
-        this.videoId = videoId;
+    public void setVideoId(String videId) {
+        this.videoId = videId;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(VideoSnippetId.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("videoId");
+        sb.append(ResourceId.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("videId");
         sb.append('=');
         sb.append(((this.videoId == null)?"<null>":this.videoId));
         sb.append(',');

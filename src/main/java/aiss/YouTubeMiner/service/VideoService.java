@@ -1,9 +1,13 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.ChannelNotFoundException;
+import aiss.YouTubeMiner.exception.VideoNotFoundChannelIDException;
+import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Video;
-import aiss.YouTubeMiner.model.YoutubeModel.videoSnippet.VideoSnippet;
-import aiss.YouTubeMiner.model.YoutubeModel.videoSnippet.VideoSnippetSearch;
+import aiss.YouTubeMiner.model.YouTubeModel.extended.video.VideoSnippetNoId;
+import aiss.YouTubeMiner.model.YouTubeModel.extended.video.VideoSnippetSearchNoId;
+import aiss.YouTubeMiner.model.YouTubeModel.videoSnippet.VideoSnippet;
+import aiss.YouTubeMiner.model.YouTubeModel.videoSnippet.VideoSnippetDetails;
+import aiss.YouTubeMiner.model.YouTubeModel.videoSnippet.VideoSnippetSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -28,7 +32,7 @@ public class VideoService {
     @Value("${youtube.api.uri}")
     private String uri;
 
-    public List<Video> findVideosMax(String channelId, Integer numVideos) throws ChannelNotFoundException {
+    public List<Video> findSearchVideosMaxChannelId(String channelId, Integer numVideos) throws VideoNotFoundChannelIDException {
         String url = uri + "/search?channelId="+channelId+"&part=snippet&type=video&maxResults="+numVideos;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
@@ -40,12 +44,12 @@ public class VideoService {
             return videoRequest.stream().map(Video::new).collect(Collectors.toList());
 
         } catch (HttpClientErrorException.BadRequest e) {
-            throw new ChannelNotFoundException();
+            throw new VideoNotFoundChannelIDException();
         }
 
     }
 
-    public List<Video> findVideos(String channelId) throws ChannelNotFoundException {
+    public List<Video> findVideosChannelId(String channelId) throws VideoNotFoundChannelIDException {
         String url = uri + "/search?channelId="+channelId+"&part=snippet&type=video";
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
@@ -57,8 +61,25 @@ public class VideoService {
             return videoRequest.stream().map(Video::new).collect(Collectors.toList());
 
         } catch (HttpClientErrorException.BadRequest e) {
-            throw new ChannelNotFoundException();
+            throw new VideoNotFoundChannelIDException();
         }
 
     }
+
+    public Video findVideoById(String videoId) throws VideoNotFoundException {
+        String url = uri + "/videos?part=snippet&id="+videoId;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-goog-api-key", token);
+        HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);
+
+        ResponseEntity<VideoSnippetSearchNoId> response = restTemplate.exchange(url, HttpMethod.GET, request, VideoSnippetSearchNoId.class);
+        List<VideoSnippetNoId> videoSnippetList = response.getBody().getItems();
+        if(videoSnippetList.isEmpty()){
+            throw new VideoNotFoundException();
+        }
+        VideoSnippetDetails details = videoSnippetList.get(0).getSnippet();
+        return new Video(videoId, details.getTitle(), details.getDescription(), details.getPublishedAt());
+
+    }
+
 }

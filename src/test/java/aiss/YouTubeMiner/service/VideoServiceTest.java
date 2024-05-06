@@ -1,6 +1,7 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.ChannelNotFoundException;
+import aiss.YouTubeMiner.exception.VideoNotFoundChannelIDException;
+import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Video;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,8 @@ public class VideoServiceTest {
 
     @Test
     @DisplayName("Get a certain number of videos from a valid channel Id")
-    void findMaxVideos() throws ChannelNotFoundException {
-        List<Video> video= service.findVideosMax("UCX6OQ3DkcsbYNE6H8uQQuVA", 3);
+    void findMaxVideosChannelId() throws VideoNotFoundChannelIDException {
+        List<Video> video= service.findSearchVideosMaxChannelId("UCX6OQ3DkcsbYNE6H8uQQuVA", 3);
         assertNotNull(video);
         assertEquals(3, video.size());
         System.out.println(video);
@@ -28,13 +29,13 @@ public class VideoServiceTest {
     @Test
     @DisplayName("Get a certain number videos from an invalid channel Id")
     void findMaxVideosFromInvalidChannelId()  {
-        assertThrows(ChannelNotFoundException.class, () -> {service.findVideosMax("Wololo", 10);});
+        assertThrows(VideoNotFoundChannelIDException.class, () -> {service.findSearchVideosMaxChannelId("Wololo", 10);});
     }
 
     @Test
     @DisplayName("Get videos from a valid channel Id")
-    void findVideos() throws ChannelNotFoundException {
-        List<Video> video= service.findVideos("UCX6OQ3DkcsbYNE6H8uQQuVA");
+    void findVideosChannelId() throws VideoNotFoundChannelIDException {
+        List<Video> video= service.findVideosChannelId("UCX6OQ3DkcsbYNE6H8uQQuVA");
         assertNotNull(video);
         System.out.println(video);
     }
@@ -42,7 +43,21 @@ public class VideoServiceTest {
     @Test
     @DisplayName("Get videos from an invalid channel Id")
     void findVideosFromInvalidChannelId()  {
-        assertThrows(ChannelNotFoundException.class, () -> {service.findVideos("Wololo");});
+        assertThrows(VideoNotFoundChannelIDException.class, () -> {service.findVideosChannelId("Wololo");});
+    }
+
+    @Test
+    @DisplayName("Get Video from a valid video Id")
+    void findVideosVideoId() throws VideoNotFoundException {
+        Video video= service.findVideoById("T9VJKIlf5ME");
+        assertNotNull(video);
+        System.out.println(video);
+    }
+
+    @Test
+    @DisplayName("Get Video from an invalid video Id")
+    void findVideosInvalidVideoId() {
+        assertThrows(VideoNotFoundException.class, () -> {service.findVideoById("Wololo");});
     }
 
 }

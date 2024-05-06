@@ -1,16 +1,14 @@
-
-package aiss.YouTubeMiner.model.YoutubeModel.comment;
-
+package aiss.YouTubeMiner.model.YouTubeModel.caption;
 
 import com.fasterxml.jackson.annotation.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TopLevelComment {
+public class Captions {
 
     @JsonProperty("id")
     private String id;
     @JsonProperty("snippet")
-    private CommentSnippet__1 snippet;
+    private CaptionSnippet snippet;
 
     @JsonProperty("id")
     public String getId() {
@@ -23,19 +21,19 @@ public class TopLevelComment {
     }
 
     @JsonProperty("snippet")
-    public CommentSnippet__1 getSnippet() {
+    public CaptionSnippet getSnippet() {
         return snippet;
     }
 
     @JsonProperty("snippet")
-    public void setSnippet(CommentSnippet__1 snippet) {
+    public void setSnippet(CaptionSnippet snippet) {
         this.snippet = snippet;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(TopLevelComment.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Captions.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
         sb.append(((this.id == null)?"<null>":this.id));

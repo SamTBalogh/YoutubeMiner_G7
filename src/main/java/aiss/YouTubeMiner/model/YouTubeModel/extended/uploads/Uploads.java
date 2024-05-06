@@ -1,29 +1,29 @@
-package aiss.YouTubeMiner.model.YoutubeModel.caption;
+package aiss.YouTubeMiner.model.YouTubeModel.extended.uploads;
 
 import com.fasterxml.jackson.annotation.*;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CaptionSearch {
+public class Uploads {
 
     @JsonProperty("items")
-    private List<Captions> items;
+    private List<UploadItems> items;
 
     @JsonProperty("items")
-    public List<Captions> getItems() {
+    public List<UploadItems> getItems() {
         return items;
     }
 
     @JsonProperty("items")
-    public void setItems(List<Captions> items) {
+    public void setItems(List<UploadItems> items) {
         this.items = items;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(CaptionSearch.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Uploads.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("items");
         sb.append('=');
         sb.append(((this.items == null)?"<null>":this.items));

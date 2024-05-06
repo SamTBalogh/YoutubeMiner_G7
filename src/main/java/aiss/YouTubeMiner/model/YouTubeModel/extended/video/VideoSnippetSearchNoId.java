@@ -1,17 +1,16 @@
-
-package aiss.YouTubeMiner.model.YoutubeModel.comment;
-
-import com.fasterxml.jackson.annotation.*;
+package aiss.YouTubeMiner.model.YouTubeModel.extended.video;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.*;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CommentSearch {
+public class VideoSnippetSearchNoId {
 
     @JsonProperty("nextPageToken")
     private String nextPageToken;
     @JsonProperty("items")
-    private List<YoutubeComment> items;
+    private List<VideoSnippetNoId> items;
 
     @JsonProperty("nextPageToken")
     public String getNextPageToken() {
@@ -24,12 +23,12 @@ public class CommentSearch {
     }
 
     @JsonProperty("items")
-    public List<YoutubeComment> getItems() {
+    public List<VideoSnippetNoId> getItems() {
         return items;
     }
 
     @JsonProperty("items")
-    public void setItems(List<YoutubeComment> items) {
+    public void setItems(List<VideoSnippetNoId> items) {
         this.items = items;
     }
 
@@ -37,7 +36,7 @@ public class CommentSearch {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(CommentSearch.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VideoSnippetSearchNoId.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("nextPageToken");
         sb.append('=');
         sb.append(((this.nextPageToken == null)?"<null>":this.nextPageToken));
@@ -55,3 +54,4 @@ public class CommentSearch {
     }
 
 }
+
