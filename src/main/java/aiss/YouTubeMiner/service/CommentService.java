@@ -1,7 +1,7 @@
 package aiss.YouTubeMiner.service;
 
 
-import aiss.YouTubeMiner.exception.CommentsNotFoundException;
+import aiss.YouTubeMiner.exception.CommentNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
 import aiss.YouTubeMiner.model.YoutubeModel.comment.CommentSearch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,35 +30,45 @@ public class CommentService {
     @Value("${youtube.api.uri}")
     private String uri;
 
-    public List<Comment> findCommentsByVideoId(String id) throws  CommentsNotFoundException{
+    public List<Comment> findCommentsByVideoId(String id) throws CommentNotFoundException {
         try {
-            String url = uri+"/commentThreads?part=snippet%2Creplies&videoId=" + id + "&key="+token ;
+            String url = uri+"/commentThreads?part=snippet&videoId=" + id;
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization","Bearer"+ token);
-            HttpEntity<CommentSearch> request = new HttpEntity<>(null,headers);
-
-            ResponseEntity<CommentSearch> response = restTemplate.exchange(url, HttpMethod.GET,request, CommentSearch.class);
-            List<Comment> comments =response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
-            return comments;
+            headers.set("X-goog-api-key",token);
+            HttpEntity<CommentSearch> request = new HttpEntity<>(null, headers);
+            try{
+                ResponseEntity<CommentSearch> response = restTemplate.exchange(url, HttpMethod.GET,request, CommentSearch.class);
+                List<Comment> comments = response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
+                return comments;
+            }
+            catch (HttpClientErrorException.Forbidden e){
+                List<Comment> comments = new ArrayList<>();
+                return comments;
+            }
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new CommentsNotFoundException();
+            throw new CommentNotFoundException();
         }
     }
 
-    public List<Comment> findCommentsByVideoIdMax(String id, Integer num) throws CommentsNotFoundException{
+    public List<Comment> findCommentsByVideoIdMax(String id, Integer num) throws CommentNotFoundException {
         try {
-            String url = uri+"/commentThreads?part=snippet%2Creplies&maxResults="+num+"&videoId=" + id + "&key="+token ;
+            String url = uri+"/commentThreads?part=snippet&maxResults="+num+"&videoId="+id;
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization","Bearer"+ token);
+            headers.set("X-goog-api-key", token);
             HttpEntity<CommentSearch> request = new HttpEntity<>(null,headers);
-
-            ResponseEntity<CommentSearch> response = restTemplate.exchange(url, HttpMethod.GET,request, CommentSearch.class);
-            List<Comment> comments =response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
-            return comments;
+            try{
+                ResponseEntity<CommentSearch> response = restTemplate.exchange(url, HttpMethod.GET,request, CommentSearch.class);
+                List<Comment> comments =response.getBody().getItems().stream().map(Comment::new).collect(Collectors.toList());
+                return comments;
+            }
+            catch (HttpClientErrorException.Forbidden e){
+                List<Comment> comments = new ArrayList<>();
+                return comments;
+            }
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new CommentsNotFoundException();
+            throw new CommentNotFoundException();
         }
     }
 }
