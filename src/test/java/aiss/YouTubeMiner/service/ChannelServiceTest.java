@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @SpringBootTest
 public class ChannelServiceTest {
     @Autowired
@@ -15,7 +17,8 @@ public class ChannelServiceTest {
     @Test
     @DisplayName("Get a channel")
     void findChannel() throws ChannelNotFoundException {
-        Channel channelYouTube = service.findchannelById("UC_x5XG1OV2P6uZZ5FSM9Ttw");
+        Channel channelYouTube = service.findchannelById("UCX6OQ3DkcsbYNE6H8uQQuVA");
+        assertNotNull(channelYouTube);
         System.out.println("Funciono + " + channelYouTube + " :)");
     }
 

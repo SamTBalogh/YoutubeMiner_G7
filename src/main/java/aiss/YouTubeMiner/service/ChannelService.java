@@ -2,6 +2,7 @@ package aiss.YouTubeMiner.service;
 
 import aiss.YouTubeMiner.exception.ChannelNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Channel;
+import aiss.YouTubeMiner.model.YoutubeModel.channel.ChannelSearch;
 import aiss.YouTubeMiner.model.YoutubeModel.channel.YoutubeChannels;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,15 +26,15 @@ public class ChannelService {
     RestTemplate restTemplate;
     public Channel findchannelById(String id) throws ChannelNotFoundException {
         try {
-            String url = uri + "/channels?part=snippet&id="+ id + "&key=" + token;
+            String url = uri + "/channels?part=snippet&id="+ id;
             HttpHeaders headers = new HttpHeaders();
             headers.set("X-goog-api-key", token);
             HttpEntity<YoutubeChannels> request=new HttpEntity<>(null,headers);
 
-            ResponseEntity<YoutubeChannels> response = restTemplate.exchange(url, HttpMethod.GET, request, YoutubeChannels.class);
+            ResponseEntity<ChannelSearch> response = restTemplate.exchange(url, HttpMethod.GET, request, ChannelSearch.class);
 
-            YoutubeChannels youtubeChannels = response.getBody();
-            Channel channel= new Channel(id, youtubeChannels.getSnippet().getTitle(), youtubeChannels.getSnippet().getDescription(), youtubeChannels.getSnippet().getPublishedAt());
+            ChannelSearch youtubeChannels = response.getBody();
+            Channel channel= new Channel(id, youtubeChannels.getItems().get(0).getSnippet().getTitle(), youtubeChannels.getItems().get(0).getSnippet().getDescription(), youtubeChannels.getItems().get(0).getSnippet().getPublishedAt());
             return channel;
         }
         catch (HttpClientErrorException.NotFound e) {
