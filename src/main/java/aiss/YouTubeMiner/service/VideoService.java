@@ -1,6 +1,6 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.CaptionsNotFoundException;
+import aiss.YouTubeMiner.exception.CaptionNotFoundException;
 import aiss.YouTubeMiner.exception.CommentNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Caption;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
@@ -48,7 +48,7 @@ public class VideoService {
         }
 
     }
-    public List<Caption> findCaptionById(String id) throws CaptionsNotFoundException {
+    public List<Caption> findCaptionById(String id) throws CaptionNotFoundException {
 
         try {
             String url = uri+"/captions?part=snippet&videoId="+id;
@@ -61,10 +61,10 @@ public class VideoService {
             return  captions;
         }
         catch (HttpClientErrorException.NotFound e){
-            throw new CaptionsNotFoundException();
+            throw new CaptionNotFoundException();
         }
     }
-    public List<Video> findVideos(String channelId, Integer numVideos, Integer numMaxComments) throws CommentNotFoundException, CaptionsNotFoundException {
+    public List<Video> findVideos(String channelId, Integer numVideos, Integer numMaxComments) throws CommentNotFoundException, CaptionNotFoundException {
         String url = uri + "/search?key="+token+"&channelId="+channelId+"&part=snippet&type=video&maxResults="+numVideos;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
