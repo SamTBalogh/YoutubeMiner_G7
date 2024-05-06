@@ -25,6 +25,7 @@ public class ChannelService {
 
     @Autowired
     RestTemplate restTemplate;
+
     public Channel findChannelById(String id) throws ChannelNotFoundException {
             String url = uri + "/channels?part=snippet&id="+ id;
             HttpHeaders headers = new HttpHeaders();
