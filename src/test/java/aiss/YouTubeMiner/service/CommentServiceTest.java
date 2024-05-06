@@ -1,6 +1,5 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.CommentNotFoundException;
 import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Comment;
 import org.junit.jupiter.api.Assertions;
@@ -59,12 +58,12 @@ public class CommentServiceTest {
         assertNotNull(comment);
         Assertions.assertEquals(0, comment.size());
         System.out.println(comment);
-        System.out.println(comment.toArray().length);
+        System.out.println(comment.size());
     }
 
     @Test
     @DisplayName("Get comments from an invalid video Id")
     void findMaxCommentsFromInvalidVideoId() {
-        assertThrows(CommentNotFoundException.class, () -> {service.findCommentsByVideoIdMax("Wololo", 10);});
+        assertThrows(VideoNotFoundException.class, () -> {service.findCommentsByVideoIdMax("Wololo", 10);});
     }
 }

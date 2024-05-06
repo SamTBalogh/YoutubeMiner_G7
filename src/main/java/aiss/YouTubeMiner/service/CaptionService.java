@@ -1,6 +1,6 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.CaptionNotFoundException;
+import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.YoutubeModel.caption.CaptionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +23,7 @@ public class CaptionService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<Caption> findCaptionsByVideoId(String id) throws CaptionNotFoundException {
+    public List<Caption> findCaptionsByVideoId(String id) throws VideoNotFoundException {
 
         try {
             String url = uri+"/captions?part=snippet&videoId="+id;
@@ -35,7 +35,7 @@ public class CaptionService {
             return response.getBody().getItems().stream().map(Caption::new).collect(Collectors.toList());
         }
         catch (HttpClientErrorException.NotFound e){
-            throw new CaptionNotFoundException();
+            throw new VideoNotFoundException();
         }
     }
 }

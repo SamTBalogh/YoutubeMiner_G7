@@ -28,8 +28,25 @@ public class VideoService {
     @Value("${youtube.api.uri}")
     private String uri;
 
-    public List<Video> findVideos(String channelId, Integer numVideos) throws ChannelNotFoundException {
-        String url = uri + "/search?channelId="+channelId+"&part=snippet&type=videomaxResults="+numVideos;
+    public List<Video> findVideosMax(String channelId, Integer numVideos) throws ChannelNotFoundException {
+        String url = uri + "/search?channelId="+channelId+"&part=snippet&type=video&maxResults="+numVideos;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-goog-api-key", token);
+        HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);
+
+        try {
+            ResponseEntity<VideoSnippetSearch> response = restTemplate.exchange(url, HttpMethod.GET, request, VideoSnippetSearch.class);
+            List<VideoSnippet> videoRequest = response.getBody().getItems();
+            return videoRequest.stream().map(Video::new).collect(Collectors.toList());
+
+        } catch (HttpClientErrorException.BadRequest e) {
+            throw new ChannelNotFoundException();
+        }
+
+    }
+
+    public List<Video> findVideos(String channelId) throws ChannelNotFoundException {
+        String url = uri + "/search?channelId="+channelId+"&part=snippet&type=video";
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);

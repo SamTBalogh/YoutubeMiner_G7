@@ -1,6 +1,6 @@
 package aiss.YouTubeMiner.service;
 
-import aiss.YouTubeMiner.exception.CaptionNotFoundException;
+import aiss.YouTubeMiner.exception.VideoNotFoundException;
 import aiss.YouTubeMiner.model.VideoMinerModel.Caption;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,17 +17,17 @@ class CaptionServiceTest {
     @Autowired
     CaptionService service;
     @Test
-    @DisplayName("Get Captions")
-    void findCaptionsByVideoId() throws CaptionNotFoundException {
+    @DisplayName("Get captions from a video id")
+    void findCaptionsByVideoId() throws VideoNotFoundException {
         List<Caption> captions = service.findCaptionsByVideoId("_VB39Jo8mAQ");
         assertNotNull(captions);
         System.out.println(captions);
     }
 
     @Test
-    @DisplayName("Get Captions 404 Not Found")
+    @DisplayName("Get captions from an invalid video Id")
     void findCaptionsByVideoIdNotFound() {
-        assertThrows(CaptionNotFoundException.class, () -> {service.findCaptionsByVideoId("Wololo");});
+        assertThrows(VideoNotFoundException.class, () -> {service.findCaptionsByVideoId("Wololo");});
     }
 
 }
