@@ -1,5 +1,8 @@
 package aiss.YouTubeMiner.service;
 
+import aiss.YouTubeMiner.exception.CaptionsNotFoundException;
+import aiss.YouTubeMiner.exception.CommentNotFoundException;
+import aiss.YouTubeMiner.model.VideoMinerModel.Video;
 import aiss.YouTubeMiner.model.YoutubeModel.videoSnippet.VideoSnippet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,19 +16,12 @@ public class VideoServiceTest {
     @Autowired
     VideoService service;
 
-
-    @Test
-    @DisplayName("Get a video")
-    void findvideo(){
-        VideoSnippet res= service.findVideo("VVVfeDVYRzFPVjJQNnVaWjVGU005VHR3LnNxdE9sLXlJSFNB");
-    }
-
     @Test
     @DisplayName("Get videos from a channel")
-    void findVideos() {
-        String prueba ="Ks-_Mh1QhMc";
-        List<VideoSnippet> video= service.findVideos("UC_x5XG1OV2P6uZZ5FSM9Ttw", 4);
-        System.out.println("Funciona \n"+ video.toString());
+    void findVideos() throws CaptionsNotFoundException, CommentNotFoundException {
+        String prueba ="UCX6OQ3DkcsbYNE6H8uQQuVA";
+        List<Video> video= service.findVideos(prueba, 1, 1);
+        System.out.println(video);
 
     }
 }

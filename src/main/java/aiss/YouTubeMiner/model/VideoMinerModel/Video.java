@@ -31,13 +31,13 @@ public class Video {
 
     public Video() {}
 
-    public Video(String id, String name, String description, String releaseTime) {
+    public Video(String id, String name, String description, String releaseTime, List<Comment> comments, List<Caption> captions) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;
-        this.comments = new ArrayList<>();
-        this.captions = new ArrayList<>();
+        this.comments = comments;
+        this.captions = captions;
     }
 
     public String getId() {
