@@ -19,7 +19,7 @@ class CaptionServiceTest {
     void findCaptionsById() throws CaptionsNotFoundException {
         String prueba =  "_VB39Jo8mAQ";
         List<Caption> captions = service.findCaptionById(prueba);
-        System.out.println(captions.toString());
+        System.out.println(captions);
     }
 
     @Test

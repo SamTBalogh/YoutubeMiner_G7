@@ -19,7 +19,15 @@ public class ChannelServiceTest {
     void findChannel() throws ChannelNotFoundException {
         Channel channelYouTube = service.findchannelById("UCX6OQ3DkcsbYNE6H8uQQuVA");
         assertNotNull(channelYouTube);
-        System.out.println("Funciono + " + channelYouTube + " :)");
+        System.out.println(channelYouTube);
     }
+    @Test
+    @DisplayName("Get a channel")
+    void findChannelNotFound() throws ChannelNotFoundException {
+        Channel channelYouTube = service.findchannelById("Wololo");
+        assertNotNull(channelYouTube);
+        System.out.println(channelYouTube);
+    }
+
 
 }

@@ -34,6 +34,9 @@ public class ChannelService {
             ResponseEntity<ChannelSearch> response = restTemplate.exchange(url, HttpMethod.GET, request, ChannelSearch.class);
 
             ChannelSearch youtubeChannels = response.getBody();
+            if (youtubeChannels == null || youtubeChannels.getItems()==null || youtubeChannels.getItems().get(0).getSnippet() == null) {
+                throw new ChannelNotFoundException();
+            }
             Channel channel= new Channel(id, youtubeChannels.getItems().get(0).getSnippet().getTitle(), youtubeChannels.getItems().get(0).getSnippet().getDescription(), youtubeChannels.getItems().get(0).getSnippet().getPublishedAt());
             return channel;
         }
