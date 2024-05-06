@@ -25,9 +25,9 @@ public class ChannelService {
     RestTemplate restTemplate;
     public Channel findchannelById(String id) throws ChannelNotFoundException {
         try {
-            String url = uri + "/channels?part=snippet%2CcontentDetails%2Cstatistics&id="+id+"&key="+token;
+            String url = uri + "/channels?part=snippet&id="+ id + "&key=" + token;
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer" + token);
+            headers.set("X-goog-api-key", token);
             HttpEntity<YoutubeChannels> request=new HttpEntity<>(null,headers);
 
             ResponseEntity<YoutubeChannels> response = restTemplate.exchange(url, HttpMethod.GET, request, YoutubeChannels.class);

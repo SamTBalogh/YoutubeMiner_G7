@@ -21,4 +21,13 @@ class CaptionServiceTest {
         List<Caption> captions = service.findCaptionById(prueba);
         System.out.println(captions.toString());
     }
+
+    @Test
+    @DisplayName("Get Captions 404 Not Found")
+    void findCaptionsByIdNotFound() throws CaptionsNotFoundException {
+        String prueba =  "Wololo";
+        List<Caption> captions = service.findCaptionById(prueba);
+        System.out.println(captions.toString());
+    }
+
 }
