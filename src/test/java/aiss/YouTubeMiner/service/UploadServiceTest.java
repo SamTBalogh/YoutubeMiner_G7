@@ -1,6 +1,8 @@
 package aiss.YouTubeMiner.service;
 
+import aiss.YouTubeMiner.exception.ChannelNotFoundException;
 import aiss.YouTubeMiner.exception.UploadsNotFoundException;
+import aiss.YouTubeMiner.model.VideoMinerModel.Channel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +16,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class UploadServiceTest {
 
     @Autowired
+    ChannelService channelService;
+    @Autowired
     UploadService service;
 
     @Test
     @DisplayName("Get a List of Uploads from a valid UploadsId")
-    void findUploads() throws UploadsNotFoundException {
-        List<String> videoIds = service.findUploadsIds("UUUyeluBRhGPCW4rPe_UvBZQ");
+    void findUploads() throws UploadsNotFoundException, ChannelNotFoundException {
+        Channel channel = channelService.findChannelByIdContentDetails("UCX6OQ3DkcsbYNE6H8uQQuVA");
+        List<String> videoIds = service.findUploadsIds(channel.getUploads());
+        System.out.println(channel.getUploads());
         assertNotNull(videoIds);
         System.out.println(videoIds);
     }
 
     @Test
     @DisplayName("Get a List of Uploads of a certain size from a valid UploadsId")
-    void findUploadsIdsMax() throws UploadsNotFoundException {
-        List<String> videoIds = service.findUploadsIdsMax("UUUyeluBRhGPCW4rPe_UvBZQ", 10);
+    void findUploadsIdsMax() throws UploadsNotFoundException, ChannelNotFoundException {
+        Channel channel = channelService.findChannelByIdContentDetails("UCX6OQ3DkcsbYNE6H8uQQuVA");
+        List<String> videoIds = service.findUploadsIdsMax(channel.getUploads(), 10);
         assertNotNull(videoIds);
         assertEquals(10, videoIds.size());
         System.out.println(videoIds);

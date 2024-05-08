@@ -40,6 +40,9 @@ public class ChannelController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    UploadService uploadService;
+
     // POST http://localhost:8082/youTubeMiner/v1/{id}
     @Operation(summary = "Send a Channel ",
             description = "Post a Channel object to VideoMiner from the YouTube's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format",
@@ -197,8 +200,7 @@ public class ChannelController {
     //EMPLEANDO LOS NUEVOS MODELOS
     //
 
-    @Autowired
-    UploadService uploadService;
+
 
     // POST http://localhost:8082/youTubeMiner/v2/{id}
     @Operation(summary = "Send a Channel ",
@@ -219,12 +221,11 @@ public class ChannelController {
         RestTemplate restTemplate = new RestTemplate();
 
         Channel channel = channelService.findChannelByIdContentDetails(id);
-        List<String> uploads = uploadService.findUploadsIdsMax(id, maxVideos);
+        List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
         List<Video> videos = new ArrayList<>();
         for(String videoId : uploads){
             videos.add(videoService.findVideoById(videoId));
         }
-        channel.setVideos(videos);
         for (Video video : videos) {
             video.setComments(commentService.findCommentsByVideoIdMax(video.getId(), maxComments));
             video.setCaptions(captionService.findCaptionsByVideoId(video.getId()));
@@ -263,7 +264,7 @@ public class ChannelController {
                                      @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws ChannelNotFoundException, CaptionNotFoundException, CommentNotFoundException, UploadsNotFoundException, VideoNotFoundException {
 
         Channel channel = channelService.findChannelByIdContentDetails(id);
-        List<String> uploads = uploadService.findUploadsIdsMax(id, maxVideos);
+        List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
         List<Video> videos = new ArrayList<>();
         for(String videoId : uploads){
             videos.add(videoService.findVideoById(videoId));
@@ -300,7 +301,7 @@ public class ChannelController {
 
         List<Channel> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
         for(Channel channel : channels) {
-            List<String> uploads = uploadService.findUploadsIdsMax(channel.getId(), maxVideos);
+            List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
             List<Video> videos = new ArrayList<>();
             for(String videoId : uploads){
                 videos.add(videoService.findVideoById(videoId));
@@ -348,7 +349,7 @@ public class ChannelController {
 
         List<Channel> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
         for(Channel channel : channels) {
-            List<String> uploads = uploadService.findUploadsIdsMax(channel.getId(), maxVideos);
+            List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
             List<Video> videos = new ArrayList<>();
             for(String videoId : uploads){
                 videos.add(videoService.findVideoById(videoId));

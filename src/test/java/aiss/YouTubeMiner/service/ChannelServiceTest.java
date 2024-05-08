@@ -32,6 +32,21 @@ public class ChannelServiceTest {
     }
 
     @Test
+    @DisplayName("Get a Channel with its content details")
+    void findChannelContentDetails() throws ChannelNotFoundException {
+        Channel channelYouTube = service.findChannelByIdContentDetails("UCX6OQ3DkcsbYNE6H8uQQuVA");
+        assertNotNull(channelYouTube);
+        System.out.println(channelYouTube);
+        System.out.println(channelYouTube.getUploads());
+    }
+    @Test
+    @DisplayName("Get a Channel 404 Not Found")
+    void findChannelNotFoundContentDetails(){
+        assertThrows(ChannelNotFoundException.class, () -> {service.findChannelByIdContentDetails("Wololo");});
+    }
+
+
+    @Test
     @DisplayName("Get a List of Channels by name")
     void findChannelsByName() throws ListChannelsNotFoundException, ChannelNotFoundException {
         List<Channel> channels = service.findSearchListChannelsByName("ThePrimeTimeagen");
