@@ -1,7 +1,6 @@
-package aiss.YouTubeMiner.model.VideoMinerModel;
+package aiss.YouTubeMiner.model.YouTubeModel.extended.channel;
 
-import aiss.YouTubeMiner.model.YouTubeModel.extended.channel.ChannelContentDetails;
-import aiss.YouTubeMiner.model.YouTubeModel.extended.channel.ChannelUploads;
+import aiss.YouTubeMiner.model.VideoMinerModel.Video;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 /**
  * @author Juan C. Alonso
  */
-public class Channel {
+public class ChannelUploads {
 
     @JsonProperty("id")
     private String id;
@@ -27,33 +26,27 @@ public class Channel {
     @JsonProperty("videos")
     private List<Video> videos;
 
+
     //this attribute has been added manually
     @JsonProperty("contentDetails")
     private ChannelContentDetails contentDetails;
 
+    @JsonProperty("uploads")
+    private String uploadsId;
 
-    public Channel() {
+    public ChannelUploads() {
         this.videos = new ArrayList<>();
     }
 
-    //Transformer ChannelUploads into Channel
-    public Channel(ChannelUploads channelUploads) {
-        this.id = channelUploads.getId();
-        this.name = channelUploads.getName();
-        this.description = channelUploads.getDescription();
-        this.createdTime = channelUploads.getCreatedTime();
-        this.videos = new ArrayList<>();
-    }
-
-    //Transformer YoutubeChannel into Channel
-    public Channel(String id, String name, String description, String createdTime) {
+    //Transformer YoutubeChannels into ChannelUploads
+    public ChannelUploads(String id, String name, String description, String createdTime, String uploads) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdTime = createdTime;
         this.videos = new ArrayList<>();
+        this.uploadsId = uploads;
     }
-
 
     public String getId() {
         return id;
@@ -103,15 +96,24 @@ public class Channel {
         this.contentDetails = contentDetails;
     }
 
+    public String getUploads() {
+        return uploadsId;
+    }
+
+    public void setUploads(String uploadsId) {
+        this.uploadsId = uploadsId;
+    }
+
     @Override
     public String toString() {
-        return "Channel{" +
+        return "ChannelUploads{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createdTime='" + createdTime + '\'' +
                 ", videos=" + videos +
                 ", contentDetails=" + contentDetails +
+                ", uploadsId=" + uploadsId +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package aiss.YouTubeMiner.Controller;
 import aiss.YouTubeMiner.exception.*;
 import aiss.YouTubeMiner.model.VideoMinerModel.Channel;
 import aiss.YouTubeMiner.model.VideoMinerModel.Video;
+import aiss.YouTubeMiner.model.YouTubeModel.extended.channel.ChannelUploads;
 import aiss.YouTubeMiner.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -136,8 +137,10 @@ public class ChannelController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        List<Channel> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
-        for(Channel channel : channels) {
+        List<ChannelUploads> channelUploads = channelService.findSearchListChannelsByNameMax(name, maxChannels);
+        List<Channel> channelList = new ArrayList<>();
+        for (ChannelUploads channelUpload : channelUploads) {
+            Channel channel = new Channel(channelUpload);
             List<Video> videos = videoService.findSearchVideosMaxChannelId(channel.getId(), maxVideos);
             channel.setVideos(videos);
             for (Video video : videos) {
@@ -146,6 +149,8 @@ public class ChannelController {
             }
 
             channel.setVideos(videos);
+            channelList.add(channel);
+
 
             HttpHeaders headers = new HttpHeaders();
             if (token != null) {
@@ -161,7 +166,7 @@ public class ChannelController {
             }
         }
 
-        return channels;
+        return channelList;
     }
 
 
@@ -181,8 +186,10 @@ public class ChannelController {
                                               @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
                                               @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws VideoNotFoundChannelIDException, CaptionNotFoundException, ListChannelsNotFoundException, CommentNotFoundException, ChannelNotFoundException {
 
-        List<Channel> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
-        for (Channel channel : channels) {
+        List<ChannelUploads> channelUploads = channelService.findSearchListChannelsByNameMax(name, maxChannels);
+        List<Channel> channelList = new ArrayList<>();
+        for (ChannelUploads channelUpload : channelUploads) {
+            Channel channel = new Channel(channelUpload);
             List<Video> videos = videoService.findSearchVideosMaxChannelId(channel.getId(), maxVideos);
             channel.setVideos(videos);
             for (Video video : videos) {
@@ -191,9 +198,9 @@ public class ChannelController {
             }
 
             channel.setVideos(videos);
-
+            channelList.add(channel);
         }
-        return channels;
+        return channelList;
     }
 
     //
@@ -220,8 +227,9 @@ public class ChannelController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        Channel channel = channelService.findChannelByIdContentDetails(id);
-        List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
+        ChannelUploads channelUploads = channelService.findChannelByIdContentDetails(id);
+        Channel channel = new Channel(channelUploads);
+        List<String> uploads = uploadService.findUploadsIdsMax(channelUploads.getUploads(), maxVideos);
         List<Video> videos = new ArrayList<>();
         for(String videoId : uploads){
             videos.add(videoService.findVideoById(videoId));
@@ -263,8 +271,9 @@ public class ChannelController {
                                      @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
                                      @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws ChannelNotFoundException, CaptionNotFoundException, CommentNotFoundException, UploadsNotFoundException, VideoNotFoundException {
 
-        Channel channel = channelService.findChannelByIdContentDetails(id);
-        List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
+        ChannelUploads channeUploads = channelService.findChannelByIdContentDetails(id);
+        Channel channel = new Channel(channeUploads);
+        List<String> uploads = uploadService.findUploadsIdsMax(channeUploads.getUploads(), maxVideos);
         List<Video> videos = new ArrayList<>();
         for(String videoId : uploads){
             videos.add(videoService.findVideoById(videoId));
@@ -298,10 +307,13 @@ public class ChannelController {
                                                  @RequestHeader(name = "Authorization", required = false) String token) throws ForbiddenException, CaptionNotFoundException, ListChannelsNotFoundException, CommentNotFoundException, ChannelNotFoundException, VideoNotFoundException, UploadsNotFoundException {
 
         RestTemplate restTemplate = new RestTemplate();
+        List<Channel> channelList = new ArrayList<>();
 
-        List<Channel> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
-        for(Channel channel : channels) {
-            List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
+        List<ChannelUploads> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
+
+        for(ChannelUploads channelUploads : channels) {
+            Channel channel = new Channel(channelUploads);
+            List<String> uploads = uploadService.findUploadsIdsMax(channelUploads.getUploads(), maxVideos);
             List<Video> videos = new ArrayList<>();
             for(String videoId : uploads){
                 videos.add(videoService.findVideoById(videoId));
@@ -327,7 +339,7 @@ public class ChannelController {
             }
         }
 
-        return channels;
+        return channelList;
     }
 
 
@@ -347,9 +359,11 @@ public class ChannelController {
                                               @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
                                               @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws CaptionNotFoundException, ListChannelsNotFoundException, CommentNotFoundException, ChannelNotFoundException, UploadsNotFoundException, VideoNotFoundException {
 
-        List<Channel> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
-        for(Channel channel : channels) {
-            List<String> uploads = uploadService.findUploadsIdsMax(channel.getUploads(), maxVideos);
+        List<ChannelUploads> channels = channelService.findSearchListChannelsByNameMax(name, maxChannels);
+        List<Channel> channelList = new ArrayList<>();
+        for(ChannelUploads channelUploads : channels) {
+            Channel channel = new Channel(channelUploads);
+            List<String> uploads = uploadService.findUploadsIdsMax(channelUploads.getUploads(), maxVideos);
             List<Video> videos = new ArrayList<>();
             for(String videoId : uploads){
                 videos.add(videoService.findVideoById(videoId));
@@ -362,7 +376,7 @@ public class ChannelController {
             channel.setVideos(videos);
 
         }
-        return channels;
+        return channelList;
     }
 
 }
