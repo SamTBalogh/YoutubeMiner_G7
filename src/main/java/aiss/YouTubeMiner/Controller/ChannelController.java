@@ -103,6 +103,7 @@ public class ChannelController {
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", content = {@Content(schema=@Schema())}),
             @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
     })
     @ResponseStatus(HttpStatus.OK)
@@ -200,6 +201,7 @@ public class ChannelController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", content = {@Content(schema=@Schema())}),
+            @ApiResponse(responseCode = "403", content = {@Content(schema=@Schema())}),
             @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
     })
     @ResponseStatus(HttpStatus.OK)
@@ -300,6 +302,7 @@ public class ChannelController {
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", content = {@Content(schema=@Schema())}),
             @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
     })
     @ResponseStatus(HttpStatus.OK)
@@ -402,6 +405,7 @@ public class ChannelController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", content = {@Content(schema=@Schema())}),
+            @ApiResponse(responseCode = "403", content = {@Content(schema=@Schema())}),
             @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
     })
     @ResponseStatus(HttpStatus.OK)
