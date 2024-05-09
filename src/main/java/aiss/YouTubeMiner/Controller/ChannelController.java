@@ -46,7 +46,10 @@ public class ChannelController {
 
     // POST http://localhost:8082/youTubeMiner/v1/{id}
     @Operation(summary = "Send a Channel ",
-            description = "Post a Channel object to VideoMiner from the YouTube's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format",
+            description = "Post a Channel object to VideoMiner from the YouTube's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format.<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from the channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved.<br /><br />" +
+                    "Optionally, include an Authorization header with your token for authorization, taking in account that is required for VideoMiner to authorize the request.",
             tags = {"channels", "post"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -90,7 +93,9 @@ public class ChannelController {
 
     // GET http://localhost:8082/youTubeMiner/v1/{id}
     @Operation( summary = "Retrieve a Channel by Id",
-            description = "Get a Channel object from the YouTube's API by specifying its id",
+            description = "Get a Channel object from the YouTube's API by specifying its id.<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from the channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved.",
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -119,7 +124,10 @@ public class ChannelController {
 
     // POST http://localhost:8082/youTubeMiner/v1/channels
     @Operation(summary = "Send a List of Channels by searching their name",
-            description = "Post a series of Channel objects to VideoMiner from the YouTube's API by searching their name, each Channel data is sent in the body of the request in JSON format",
+            description = "Post a series of Channel objects to VideoMiner from the YouTube's API by searching their name, each Channel data is sent in the body of the request in JSON format.<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from each channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved for each channel.<br /><br />" +
+                    "Optionally, include an Authorization header with your token for authorization, taking in account that is required for VideoMiner to authorize the request.",
             tags = {"channels", "post"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -172,7 +180,9 @@ public class ChannelController {
 
     // GET http://localhost:8082/youTubeMiner/v1/{id}
     @Operation( summary = "Retrieve a List of Channels by Id",
-            description = "Get a List of Channel objects from the YouTube's API by searching their name.",
+            description = "Get a List of Channel objects from the YouTube's API by searching their name.<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from each channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved for each channel.",
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -211,7 +221,10 @@ public class ChannelController {
 
     // POST http://localhost:8082/youTubeMiner/v2/{id}
     @Operation(summary = "Send a Channel ",
-            description = "Post a Channel object to VideoMiner from the YouTube's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format. This version is using the new models implemented",
+            description = "Post a Channel object to VideoMiner from the YouTube's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format.<br /> This version is using the new models implemented.<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from the channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved.<br /><br />" +
+                    "Optionally, include an Authorization header with your token for authorization, taking in account that is required for VideoMiner to authorize the request.",
             tags = {"channels", "post"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -259,7 +272,9 @@ public class ChannelController {
 
     // GET http://localhost:8082/youTubeMiner/v2/{id}
     @Operation( summary = "Retrieve a Channel by Id",
-            description = "Get a Channel object from the YouTube's API by specifying its id. This version is using the new models implemented",
+            description = "Get a Channel object from the YouTube's API by specifying its id.<br />This version is using the new models implemented<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from the channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved.",
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -290,7 +305,11 @@ public class ChannelController {
 
     // POST http://localhost:8082/youTubeMiner/v2/channels
     @Operation(summary = "Send a List of Channels by searching their name",
-            description = "Post a series of Channel objects to VideoMiner from the YouTube's API by searching their name, each Channel data is sent in the body of the request in JSON format. This version is using the new models implemented",
+            description = "Post a series of Channel objects to VideoMiner from the YouTube's API by searching their name, each Channel data is sent in the body of the request in JSON format.<br />"
+            +"This version is using the new models implemented<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from each channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved for each channel.<br /><br />" +
+                    "Optionally, include an Authorization header with your token for authorization, taking in account that is required for VideoMiner to authorize the request.",
             tags = {"channels", "post"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
@@ -345,7 +364,9 @@ public class ChannelController {
 
     // GET http://localhost:8082/youTubeMiner/v2/{id}
     @Operation( summary = "Retrieve a List of Channels by Id",
-            description = "Get a List of Channel objects from the YouTube's API by searching their name. This version is using the new models implemented",
+            description = "Get a List of Channel objects from the YouTube's API by searching their name. This version is using the new models implemented<br /><br />" +
+                    "Additionally, you can specify the maximum number of videos and comments to retrieve from each channel.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved for each channel.",
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
