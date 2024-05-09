@@ -124,7 +124,7 @@ public class ChannelController {
 
     // POST http://localhost:8082/youTubeMiner/v1/channels
     @Operation(summary = "Send a List of Channels by searching their name",
-            description = "Post a series of Channel objects to VideoMiner from the YouTube's API by searching by their name, each Channel data is sent in the body of the requests in JSON format.<br /><br />" +
+            description = "Post a series of Channel objects to VideoMiner from the YouTube's API by searching by their name, the Channel data is sent in the body of each request in JSON format.<br /><br />" +
                     "The maximum number of channels to be retrieved can be specified with `maxChannels`.<br />If no values are provided, the number of channels will be 3.<br /><br />" +
                     "The maximum number of videos and comments to retrieve from each channel can be specified with the parameters `maxVideos` and `maxComments` respectively.<br />" +
                     "If no values are provided, defaults of 10 videos and 10 comments will be retrieved for each channel.<br /><br />" +
@@ -307,7 +307,7 @@ public class ChannelController {
 
     // POST http://localhost:8082/youTubeMiner/v2/channels
     @Operation(summary = "Send a series of Channels by searching their name",
-            description = "This version is using the new models implemented.<br /><br />Post a series of Channel objects to VideoMiner from the YouTube's API by searching by their name, each Channel data is sent in the body of the requests in JSON format.<br /><br />" +
+            description = "This version is using the new models implemented.<br /><br />Post a series of Channel objects to VideoMiner from the YouTube's API by searching by their name, the Channel data is sent in the body of each requests in JSON format.<br /><br />" +
                     "The maximum number of channels to be retrieved can be specified with `maxChannels`.<br />If no values are provided, the number of channels will be 3.<br /><br />" +
                     "The maximum number of videos and comments to retrieve from each channel can be specified with the parameters `maxVideos` and `maxComments` respectively.<br />" +
                     "If no values are provided, defaults of 10 videos and 10 comments will be retrieved for each channel.<br /><br />" +
